@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using Newtonsoft.Json.Serialization;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace WebAPI.Controllers
@@ -15,7 +16,13 @@ namespace WebAPI.Controllers
                 {
                     c.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     c.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-                });
+                })
+                .AddNewtonsoftJson(setupAction =>
+                {
+                    setupAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    setupAction.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                })
+                ;
         }
 
         /// <summary>
