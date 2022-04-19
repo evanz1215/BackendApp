@@ -9,6 +9,8 @@ namespace Application.Common.Dependencies.DataAccess.Repositories.Common
     {
         Task<TEntity> GetByIdAsync(TId id);
 
+        Task<bool> IsExistedByIdAsync(TId id);
+
         EntityEntry<TEntity> Create(TEntity entity);
 
         Task<EntityEntry<TEntity>> CreateAsync(TEntity entity);

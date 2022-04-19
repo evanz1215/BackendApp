@@ -31,6 +31,11 @@ namespace Infrastructure.ApplicationDependencies.DataAccess.Repositories.Common
             return await BaseQuery.FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
+        public async Task<bool> IsExistedByIdAsync(TId id)
+        {
+            return await _set.AnyAsync(x => x.Id.Equals(id));
+        }
+
         public EntityEntry<TEntity> Create(TEntity entity)
         {
             return _set.Add(entity);
