@@ -16,14 +16,22 @@ namespace WebAPI.CORS
             {
                 options.AddDefaultPolicy(builder =>
                 {
-                    builder
+                    var corsPolicy = builder
                     .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials()
-                    .SetIsOriginAllowedToAllowWildcardSubdomains()
-                    .WithOrigins(
-                        corsSettings.AllowedOrigins)
-                    .Build();
+                    .AllowAnyHeader();
+
+                    if (corsSettings != null && corsSettings.AllowedOrigins.Length > 0)
+                    {
+                        corsPolicy.AllowCredentials();
+                        corsPolicy.SetIsOriginAllowedToAllowWildcardSubdomains();
+                        corsPolicy.WithOrigins(
+                        corsSettings.AllowedOrigins);
+                    }
+                    else
+                    {
+                        corsPolicy.AllowAnyOrigin();
+                    }
+                    corsPolicy.Build();
                 });
             });
         }

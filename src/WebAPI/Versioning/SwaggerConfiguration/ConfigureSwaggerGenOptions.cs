@@ -18,7 +18,6 @@ namespace WebAPI.Versioning.SwaggerConfiguration
             _configuration = configuration;
         }
 
-
         public void PostConfigure(string _, SwaggerGenOptions options)
         {
             // Clear potentially added unversioned docs.
