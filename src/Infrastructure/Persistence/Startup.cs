@@ -14,12 +14,25 @@ namespace Infrastructure.Persistence
         public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration, IHostEnvironment env)
         {
             services.AddSingleton(configuration.GetMyOptions<ApplicationDbSettings>());
+            var settings = configuration.GetMyOptions<ApplicationDbSettings>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(
-                    configuration.GetMyOptions<ConnectionStrings>().DefaultConnection,
-                    opts => opts.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
+                switch (settings.Provider.ToUpper())
+                {
+                    case "MSSQL":
+                    default:
+                        options.UseSqlServer(
+                configuration.GetMyOptions<ConnectionStrings>().DefaultConnection,
+                opts => opts.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
+                        break;
+
+                    case "MYSQL":
+                        options.UseMySql(
+                            configuration.GetMyOptions<ConnectionStrings>().DefaultConnection,
+                    MySqlServerVersion.LatestSupportedServerVersion);
+                        break;
+                }
 
                 // Allows log messages to contain the normally masked
                 // SQL statement parameters sent to DB.

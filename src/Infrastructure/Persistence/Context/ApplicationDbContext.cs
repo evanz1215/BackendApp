@@ -29,8 +29,8 @@ namespace Infrastructure.Persistence.Context
             //ConfigureDecimalPrecision(builder);
             ConfigureSoftDeleteFilter(builder);
 
-            string schema = "dbo";
-            builder.HasDefaultSchema(schema);
+            //string schema = "dbo";
+            //builder.HasDefaultSchema(schema);
 
             //builder.ApplyConfiguration(new ProductTypeConfiguration());
 
