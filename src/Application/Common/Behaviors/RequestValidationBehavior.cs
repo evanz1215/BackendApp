@@ -13,7 +13,7 @@ namespace Application.Common.Behaviors
             _validators = validators;
         }
 
-        public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             if (_validators.Any())
             {
